@@ -55,6 +55,10 @@ namespace CustomIdentity
         public override async Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool isPersistent, bool shouldLockout)
         {
             var user = new CustomUser() { Id = "1", UserName = "test" };
+
+            var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            AuthenticationManager.SignIn(new AuthenticationProperties(), identity);
+
             return SignInStatus.Success;
         }
     }
